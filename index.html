@@ -1,0 +1,1196 @@
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>Wildberries Expert — визитка</title>
+  <style>
+    :root{
+      --bg1:#fff2e6;
+      --bg2:#f7e0cf;
+      --bg3:#f2cfb8;
+
+      --card-bg: rgba(255,255,255,.62);
+      --card-brd: rgba(90,50,30,.14);
+
+      --text:#2a2320;
+      --muted:#5a4a41;
+
+      --pill-bg: rgba(255, 244, 236, .72);
+      --pill-brd: rgba(90,50,30,.14);
+
+      --shadow: 0 24px 60px rgba(42,35,32,.14), 0 6px 18px rgba(42,35,32,.08);
+      --shadow-sm: 0 10px 24px rgba(42,35,32,.10);
+
+      --accent:#8b4a2f;          /* тёплый терракотовый */
+      --accent-2:#6f3a25;        /* для active */
+      --accent-soft: rgba(139,74,47,.12);
+
+      --ring: rgba(139,74,47,.42);
+
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+
+      --gap: 16px;
+      --pad: clamp(20px, 3.4vw, 32px);
+
+      --maxw: 720px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 620px at 20% 10%, rgba(255,255,255,.7), rgba(255,255,255,0) 60%),
+        linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 45%, var(--bg3) 100%);
+      overflow-x:hidden;
+    }
+
+    /* Декоративные blobs без картинок */
+    body::before, body::after{
+      content:"";
+      position:fixed;
+      inset:auto;
+      width:520px;
+      height:520px;
+      border-radius:999px;
+      filter: blur(26px);
+      opacity:.32;
+      pointer-events:none;
+      z-index:-1;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 228, 200, .95), rgba(255, 205, 170, 0) 62%);
+      transform: translate3d(0,0,0);
+    }
+    body::before{
+      top:-180px;
+      left:-160px;
+      background: radial-gradient(circle at 35% 35%, rgba(255, 236, 214, .95), rgba(255, 205, 170, 0) 62%);
+    }
+    body::after{
+      bottom:-210px;
+      right:-190px;
+      width:620px;
+      height:620px;
+      opacity:.26;
+      background: radial-gradient(circle at 45% 45%, rgba(255, 217, 182, .95), rgba(255, 182, 140, 0) 64%);
+    }
+
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding: 24px 16px;
+    }
+
+    .card{
+      width:min(var(--maxw), 100%);
+      background: var(--card-bg);
+      border:1px solid var(--card-brd);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* тонкая внутренняя обводка */
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:10px;
+      border-radius: calc(var(--radius-xl) - 10px);
+      border:1px solid rgba(255,255,255,.52);
+      pointer-events:none;
+    }
+
+    .inner{
+      padding: var(--pad);
+      display:flex;
+      flex-direction:column;
+      gap: 22px;
+    }
+
+    .header{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+
+    .nameRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 14px;
+      flex-wrap:wrap;
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(26px, 3.2vw, 40px);
+      letter-spacing:-0.02em;
+      line-height:1.08;
+    }
+
+    .role{
+      margin:0;
+      font-size: 15px;
+      color: var(--muted);
+      line-height:1.35;
+    }
+
+    .offer{
+      margin: 6px 0 0;
+      font-size: 15px;
+      line-height:1.55;
+      color: var(--text);
+      max-width: 66ch;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      background: rgba(255,255,255,.58);
+      border:1px solid rgba(90,50,30,.14);
+      border-radius: 999px;
+      box-shadow: 0 10px 18px rgba(42,35,32,.06);
+      font-size: 13px;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+
+    .badge svg{ width:16px; height:16px; stroke: var(--accent); }
+
+    .sectionTitle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin:0 0 10px 0;
+      font-size: 14px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .sectionTitle svg{ width:18px; height:18px; stroke: var(--accent); }
+
+    .servicesGrid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .servicePill{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 12px 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-brd);
+      border-radius: 999px;
+      box-shadow: 0 10px 22px rgba(42,35,32,.06);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .servicePill:hover{
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+      background: rgba(255, 250, 246, .78);
+    }
+    .serviceIcon{
+      width:18px; height:18px;
+      flex:0 0 auto;
+      stroke: var(--accent);
+    }
+    .serviceText{
+      font-size: 14px;
+      line-height:1.25;
+      color: var(--text);
+    }
+
+    .metrics{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .metricRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.56);
+      border: 1px solid rgba(90,50,30,.12);
+      box-shadow: 0 10px 20px rgba(42,35,32,.05);
+    }
+    .metricLabel{
+      font-size: 14px;
+      color: var(--muted);
+      line-height:1.25;
+    }
+    .metricValue{
+      font-size: 14px;
+      font-weight: 650;
+      color: var(--text);
+      letter-spacing: .01em;
+      white-space:nowrap;
+    }
+
+    .contacts{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .contactRow{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.56);
+      border: 1px solid rgba(90,50,30,.12);
+      box-shadow: 0 10px 20px rgba(42,35,32,.05);
+    }
+    .contactRow svg{
+      width:18px;height:18px; stroke: var(--accent);
+      flex:0 0 auto;
+    }
+    .contactLabel{
+      color: var(--muted);
+      font-size: 13px;
+      min-width: 88px;
+    }
+    a{
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(139,74,47,.25);
+    }
+    a:hover{ border-bottom-color: rgba(139,74,47,.55); }
+
+    .ctaRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(139,74,47,.98), rgba(111,58,37,.98));
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: .01em;
+      border: 1px solid rgba(60,28,18,.18);
+      box-shadow: 0 16px 30px rgba(139,74,47,.26);
+      transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 20px 38px rgba(139,74,47,.30);
+      filter: brightness(1.02);
+    }
+    .btn:active{
+      transform: translateY(0px);
+      box-shadow: 0 12px 24px rgba(139,74,47,.22);
+      filter: brightness(.98);
+    }
+    .btn svg{
+      width:18px;height:18px; stroke: rgba(255,255,255,.92);
+    }
+
+    /* QR блок */
+    .qrBlock{
+      display:flex;
+      align-items:center;
+      gap: 16px;
+      padding: 14px 14px;
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.56);
+      border: 1px solid rgba(90,50,30,.12);
+      box-shadow: 0 10px 20px rgba(42,35,32,.05);
+    }
+    .qrCanvasWrap{
+      width: 112px;
+      height: 112px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(90,50,30,.14);
+      display:grid;
+      place-items:center;
+      flex: 0 0 auto;
+      overflow:hidden;
+    }
+    canvas{ display:block; width: 100px; height: 100px; }
+    .qrText{
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .qrTitle{
+      margin:0;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .qrSub{
+      margin:0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height:1.35;
+    }
+    .qrLink{
+      font-size: 13px;
+      color: var(--muted);
+      border-bottom: 1px dashed rgba(139,74,47,.35);
+      width: fit-content;
+    }
+    .qrLink:hover{ border-bottom-color: rgba(139,74,47,.6); }
+
+    /* Разделители */
+    .divider{
+      height:1px;
+      background: linear-gradient(90deg, rgba(90,50,30,0), rgba(90,50,30,.14), rgba(90,50,30,0));
+      margin: 2px 0;
+    }
+
+    /* Доступность: фокус */
+    a:focus-visible, .btn:focus-visible, button:focus-visible{
+      outline: 3px solid var(--ring);
+      outline-offset: 3px;
+      border-radius: 999px;
+    }
+    .contactRow a:focus-visible{ border-radius: 8px; }
+
+    /* Мобильная адаптация */
+    @media (max-width: 520px){
+      .servicesGrid{ grid-template-columns: 1fr; }
+      .contactLabel{ min-width: 74px; }
+      .metricRow{
+        flex-direction:column;
+        align-items:flex-start;
+        gap: 6px;
+      }
+      .metricValue{ white-space:normal; }
+      .qrBlock{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .qrCanvasWrap{ width: 124px; height:124px; }
+      canvas{ width: 112px; height:112px; }
+      .ctaRow{ flex-direction:column; align-items:stretch; }
+      .btn{ width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <article class="card" aria-label="Электронная визитка Wildberries Expert">
+      <div class="inner">
+        <!-- A) Шапка -->
+        <header class="header">
+          <div class="nameRow">
+            <div>
+              <h1>Wildberries Expert</h1>
+              <p class="role">Продвижение товаров на Wildberries</p>
+            </div>
+            <div class="badge" aria-label="Фокус: SEO, реклама, unit-экономика">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v3m0 12v3M3 12h3m12 0h3" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M12 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10Z" stroke-width="1.6"/>
+              </svg>
+              SEO • WB Ads • Unit-экономика
+            </div>
+          </div>
+
+          <p class="offer">
+            Продвигаю товары на Wildberries: SEO карточек + внутренняя реклама + unit-экономика. Вывожу позиции в ТОП, усиливаю конверсию и держу под контролем прибыльность.
+          </p>
+        </header>
+
+        <div class="divider" role="separator" aria-hidden="true"></div>
+
+        <!-- B) Услуги -->
+        <section aria-label="Услуги">
+          <div class="sectionTitle">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 4h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" stroke-width="1.6"/>
+              <path d="M8 8h8M8 12h8M8 16h6" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            Услуги
+          </div>
+
+          <div class="servicesGrid" role="list">
+            <div class="servicePill" role="listitem">
+              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M10.5 18.5a7 7 0 1 1 4.95-2.05L21 22" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M8.5 11h4.8" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <div class="serviceText">SEO карточек и семантика</div>
+            </div>
+
+            <div class="servicePill" role="listitem">
+              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 19V9" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M12 19V5" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M19 19v-7" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M4 19h16" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <div class="serviceText">Внутренняя реклама (WB Ads)</div>
+            </div>
+
+            <div class="servicePill" role="listitem">
+              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v18" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M7.5 7.5c0-1.7 1.7-3 4.5-3s4.5 1.3 4.5 3-1.7 3-4.5 3-4.5 1.3-4.5 3 1.7 3 4.5 3 4.5-1.3 4.5-3" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <div class="serviceText">Unit-экономика и рентабельность</div>
+            </div>
+
+            <div class="servicePill" role="listitem">
+              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 17l10-10" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M8.5 7.5h.01M15.5 16.5h.01" stroke-width="2" stroke-linecap="round"/>
+                <path d="M6 6h12v12H6z" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+              <div class="serviceText">Контент и упаковка карточки</div>
+            </div>
+
+            <div class="servicePill" role="listitem">
+              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 19V5" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M4 19h16" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M8 15l3-4l3 2l4-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="serviceText">Аналитика и отчётность</div>
+            </div>
+
+            <div class="servicePill" role="listitem">
+              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 7h10v10H7z" stroke-width="1.6" />
+                <path d="M7 11h10" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M10 7v10" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <div class="serviceText">Остатки и поставки</div>
+            </div>
+
+            <div class="servicePill" role="listitem">
+              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 21s7-4.6 7-11a4 4 0 0 0-7-2a4 4 0 0 0-7 2c0 6.4 7 11 7 11Z" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M9.5 12l1.8 1.8L15.5 9.6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="serviceText">Отзывы и репутация</div>
+            </div>
+
+            <div class="servicePill" role="listitem">
+              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9s-9 4.03-9 9s4.03 9 9 9Z" stroke-width="1.6"/>
+                <path d="M8 13c1.2-1.1 2.6-1.6 4-1.6s2.8.5 4 1.6" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M9 10h.01M15 10h.01" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <div class="serviceText">Конкуренты и рынок</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider" role="separator" aria-hidden="true"></div>
+
+        <!-- C) Результаты -->
+        <section aria-label="Результаты">
+          <div class="sectionTitle">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 18V6" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M4 18h16" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M7 15l3-4l3 2l4-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Результаты
+          </div>
+
+          <div class="metrics">
+            <div class="metricRow" role="group" aria-label="Рост продаж">
+              <div class="metricLabel">Рост продаж</div>
+              <div class="metricValue">__ за __</div>
+            </div>
+            <div class="metricRow" role="group" aria-label="ДРР">
+              <div class="metricLabel">ДРР</div>
+              <div class="metricValue">__ ( __ )</div>
+            </div>
+            <div class="metricRow" role="group" aria-label="ROMI">
+              <div class="metricLabel">ROMI</div>
+              <div class="metricValue">__</div>
+            </div>
+            <div class="metricRow" role="group" aria-label="Конверсия карточки (CR)">
+              <div class="metricLabel">Конверсия карточки (CR)</div>
+              <div class="metricValue">__</div>
+            </div>
+            <div class="metricRow" role="group" aria-label="CTR">
+              <div class="metricLabel">CTR</div>
+              <div class="metricValue">__</div>
+            </div>
+            <div class="metricRow" role="group" aria-label="Выкуп">
+              <div class="metricLabel">Выкуп</div>
+              <div class="metricValue">__ ( __ )</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider" role="separator" aria-hidden="true"></div>
+
+        <!-- D) Контакты -->
+        <section aria-label="Контакты">
+          <div class="sectionTitle">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 16.5v2a2 2 0 0 1-2.2 2c-9.5-.9-14.5-5.9-15.4-15.4A2 2 0 0 1 5.5 3h2a2 2 0 0 1 2 1.7c.1.8.3 1.6.6 2.4a2 2 0 0 1-.5 2.1L8.9 10a14 14 0 0 0 5.1 5.1l.8-.7a2 2 0 0 1 2.1-.5c.8.3 1.6.5 2.4.6a2 2 0 0 1 1.7 2Z" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+            Контакты
+          </div>
+
+          <div class="contacts">
+            <div class="contactRow">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 7h16v10H4z" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M4 8l8 6l8-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="contactLabel">Email</div>
+              <a href="mailto:expert@uniteconomy.ru" aria-label="Написать на email expert@uniteconomy.ru">expert@uniteconomy.ru</a>
+            </div>
+
+            <div class="contactRow">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 5.5L3.6 12.3a1 1 0 0 0 .07 1.88l4.6 1.6l1.8 4.6a1 1 0 0 0 1.74.2l2.6-3.3l4.9 3.2a1 1 0 0 0 1.52-.67L22 6.6a1 1 0 0 0-1-1.1Z" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M8.3 15.7l6.9-6.2" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <div class="contactLabel">Telegram</div>
+              <a href="https://t.me/STRANNIK76" target="_blank" rel="noopener" aria-label="Открыть Telegram @STRANNIK76">@STRANNIK76</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- E) CTA + F) QR -->
+        <section aria-label="Связаться">
+          <div class="ctaRow">
+            <a class="btn" href="https://t.me/STRANNIK76" target="_blank" rel="noopener" aria-label="Написать в Telegram">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 5.5L3.6 12.3a1 1 0 0 0 .07 1.88l4.6 1.6l1.8 4.6a1 1 0 0 0 1.74.2l2.6-3.3l4.9 3.2a1 1 0 0 0 1.52-.67L22 6.6a1 1 0 0 0-1-1.1Z" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M8.3 15.7l6.9-6.2" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              Написать в Telegram
+            </a>
+
+            <div class="qrBlock" aria-label="QR код Telegram">
+              <div class="qrCanvasWrap" aria-hidden="true">
+                <canvas id="qr" width="100" height="100"></canvas>
+              </div>
+              <div class="qrText">
+                <p class="qrTitle">Сканируй — откроется Telegram</p>
+                <p class="qrSub">QR ведёт на @STRANNIK76.</p>
+                <a class="qrLink" href="https://t.me/STRANNIK76" target="_blank" rel="noopener" aria-label="Открыть ссылку Telegram">t.me/STRANNIK76</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </article>
+  </main>
+
+  <script>
+    /* Мини-генератор QR (версии 1..6, ECC L/M/Q/H) без внешних зависимостей.
+       Упрощённая, компактная реализация для визитки. */
+    (function(){
+      "use strict";
+
+      const text = "https://t.me/STRANNIK76";
+      const canvas = document.getElementById("qr");
+      const ctx = canvas.getContext("2d", { alpha: false });
+
+      // --- GF(256) ---
+      const GF = (function(){
+        const exp = new Uint8Array(512);
+        const log = new Uint8Array(256);
+        let x = 1;
+        for (let i=0;i<255;i++){
+          exp[i] = x;
+          log[x] = i;
+          x <<= 1;
+          if (x & 0x100) x ^= 0x11d;
+        }
+        for (let i=255;i<512;i++) exp[i] = exp[i-255];
+        function mul(a,b){
+          if (a===0 || b===0) return 0;
+          return exp[log[a] + log[b]];
+        }
+        return { mul };
+      })();
+
+      function rsGeneratorPoly(degree){
+        // (x - a^0)(x - a^1)...(x - a^(degree-1))
+        let poly = [1];
+        for (let i=0;i<degree;i++){
+          const a = (function(){
+            // a^i in GF(256) with primitive 0x11d: exp table implicit in mul logic
+            // We can compute via repeated multiply by 2 in GF(256) using exp/log,
+            // but easiest: use pow(2,i) in exp by leveraging log/exp indirectly.
+            // We'll generate by multiplying: 1 * (x + α^i)
+            // Need α^i in int form; use exp table reconstruction:
+            // We'll recreate exp on the fly by repeated doubling in GF, but degree <= 30ish here.
+            let v = 1;
+            for (let k=0;k<i;k++){
+              v = GF.mul(v, 2);
+            }
+            return v;
+          })();
+
+          const next = new Array(poly.length + 1).fill(0);
+          for (let j=0;j<poly.length;j++){
+            next[j] ^= GF.mul(poly[j], a);
+            next[j+1] ^= poly[j];
+          }
+          poly = next;
+        }
+        return poly; // highest degree last
+      }
+
+      function rsCompute(data, eccLen){
+        const gen = rsGeneratorPoly(eccLen);
+        const ecc = new Array(eccLen).fill(0);
+        for (let i=0;i<data.length;i++){
+          const factor = data[i] ^ ecc[0];
+          ecc.shift();
+          ecc.push(0);
+          for (let j=0;j<eccLen;j++){
+            ecc[j] ^= GF.mul(gen[j], factor);
+          }
+        }
+        return ecc;
+      }
+
+      // --- QR tables for versions 1..6 (byte mode capacities & ecc codewords by EC level) ---
+      // capacities in bytes for mode "byte", excluding overhead, per version+EC
+      const CAP_BYTES = {
+        1: { L:17, M:14, Q:11, H:7 },
+        2: { L:32, M:26, Q:20, H:14 },
+        3: { L:53, M:42, Q:32, H:24 },
+        4: { L:78, M:62, Q:46, H:34 },
+        5: { L:106, M:84, Q:60, H:44 },
+        6: { L:134, M:106, Q:74, H:58 }
+      };
+      // total data codewords for each (version, level) for 1..6 (single block for these small versions in our use)
+      const DATA_CW = {
+        1: { L:19, M:16, Q:13, H:9 },
+        2: { L:34, M:28, Q:22, H:16 },
+        3: { L:55, M:44, Q:34, H:26 },
+        4: { L:80, M:64, Q:48, H:36 },
+        5: { L:108, M:86, Q:62, H:46 },
+        6: { L:136, M:108, Q:76, H:60 }
+      };
+      const ECC_CW = {
+        1: { L:7,  M:10, Q:13, H:17 },
+        2: { L:10, M:16, Q:22, H:28 },
+        3: { L:15, M:26, Q:36, H:44 },
+        4: { L:20, M:36, Q:52, H:64 },
+        5: { L:26, M:48, Q:72, H:88 },
+        6: { L:36, M:64, Q:96, H:112 }
+      };
+
+      function pickVersionAndLevel(str){
+        // предпочтение: Q (баланс), если не влезает — M или L
+        const bytes = new TextEncoder().encode(str).length;
+        const prefs = ["Q","M","L","H"];
+        for (let v=1; v<=6; v++){
+          for (const lvl of prefs){
+            if (bytes <= CAP_BYTES[v][lvl]) return { version:v, level:lvl, bytes };
+          }
+        }
+        // если вдруг не влезло, fallback
+        return { version:6, level:"L", bytes };
+      }
+
+      function makeBitBuffer(){
+        const bits = [];
+        return {
+          push(value, length){
+            for (let i=length-1;i>=0;i--) bits.push((value>>>i)&1);
+          },
+          pushBytes(arr){
+            for (const b of arr) this.push(b, 8);
+          },
+          get bits(){ return bits; }
+        };
+      }
+
+      function bitsToCodewords(bits){
+        const out = [];
+        for (let i=0;i<bits.length;i+=8){
+          let v = 0;
+          for (let j=0;j<8;j++){
+            v = (v<<1) | (bits[i+j]||0);
+          }
+          out.push(v);
+        }
+        return out;
+      }
+
+      function buildDataCodewords(str, version, level){
+        const enc = new TextEncoder().encode(str);
+        const bb = makeBitBuffer();
+
+        // mode indicator: byte = 0100
+        bb.push(0b0100, 4);
+
+        // char count indicator length for byte mode: v1-9 => 8 bits
+        bb.push(enc.length, 8);
+
+        // data
+        bb.pushBytes(enc);
+
+        const totalDataCw = DATA_CW[version][level];
+        const totalDataBits = totalDataCw * 8;
+
+        // terminator up to 4 bits
+        const remaining = totalDataBits - bb.bits.length;
+        if (remaining > 0) bb.push(0, Math.min(4, remaining));
+
+        // pad to byte
+        while (bb.bits.length % 8 !== 0) bb.push(0, 1);
+
+        // pad codewords 0xEC, 0x11 alternating
+        let cws = bitsToCodewords(bb.bits);
+        const padBytes = [0xEC, 0x11];
+        let p = 0;
+        while (cws.length < totalDataCw){
+          cws.push(padBytes[p++ & 1]);
+        }
+        return cws;
+      }
+
+      function interleaveBlocks(dataCw, eccCw){
+        // For versions 1..6 here, treat as single block
+        return dataCw.concat(eccCw);
+      }
+
+      // --- QR matrix building ---
+      function sizeForVersion(v){ return 17 + 4*v; }
+
+      function makeMatrix(n){
+        const m = new Array(n);
+        for (let y=0;y<n;y++){
+          m[y] = new Array(n).fill(null); // null means unset
+        }
+        return m;
+      }
+
+      function setModule(m, x, y, val){
+        if (x<0||y<0||y>=m.length||x>=m.length) return;
+        m[y][x] = val;
+      }
+
+      function addFinder(m, x, y){
+        for (let dy=-1; dy<=7; dy++){
+          for (let dx=-1; dx<=7; dx++){
+            const xx = x+dx, yy=y+dy;
+            const on = (dx>=0 && dx<=6 && dy>=0 && dy<=6 &&
+              (dx===0||dx===6||dy===0||dy===6 || (dx>=2&&dx<=4&&dy>=2&&dy<=4)));
+            setModule(m, xx, yy, on ? 1 : 0);
+          }
+        }
+      }
+
+      function addTiming(m){
+        const n = m.length;
+        for (let i=8;i<n-8;i++){
+          const v = (i%2===0) ? 1 : 0;
+          if (m[6][i] === null) setModule(m, i, 6, v);
+          if (m[i][6] === null) setModule(m, 6, i, v);
+        }
+      }
+
+      function addAlignment(m, version){
+        // alignment patterns positions for versions 2..6
+        const posMap = {
+          2:[6,18],
+          3:[6,22],
+          4:[6,26],
+          5:[6,30],
+          6:[6,34]
+        };
+        const pos = posMap[version];
+        if (!pos) return;
+        for (let i=0;i<pos.length;i++){
+          for (let j=0;j<pos.length;j++){
+            const x = pos[i], y = pos[j];
+            // skip if overlaps finder
+            const n = m.length;
+            const isInFinder =
+              (x<=8 && y<=8) ||
+              (x>=n-9 && y<=8) ||
+              (x<=8 && y>=n-9);
+            if (isInFinder) continue;
+            // draw 5x5 alignment pattern
+            for (let dy=-2; dy<=2; dy++){
+              for (let dx=-2; dx<=2; dx++){
+                const xx=x+dx, yy=y+dy;
+                const dist = Math.max(Math.abs(dx), Math.abs(dy));
+                const on = (dist===2 || dist===0);
+                setModule(m, xx, yy, on ? 1 : 0);
+              }
+            }
+          }
+        }
+      }
+
+      function reserveFormatInfo(m){
+        const n = m.length;
+        // Around top-left
+        for (let i=0;i<9;i++){
+          if (i!==6){
+            if (m[8][i]===null) m[8][i]=0; // reserve
+            if (m[i][8]===null) m[i][8]=0;
+          }
+        }
+        // top-right & bottom-left
+        for (let i=0;i<8;i++){
+          if (m[8][n-1-i]===null) m[8][n-1-i]=0;
+          if (m[n-1-i][8]===null) m[n-1-i][8]=0;
+        }
+        // dark module
+        setModule(m, 8, n-8, 1);
+      }
+
+      function isReserved(m, x, y){
+        return m[y][x] !== null;
+      }
+
+      function placeData(m, codewords){
+        const n = m.length;
+        let bitIndex = 0;
+        const totalBits = codewords.length * 8;
+
+        function nextBit(){
+          if (bitIndex >= totalBits) return 0;
+          const cw = codewords[bitIndex >> 3];
+          const b = (cw >> (7 - (bitIndex & 7))) & 1;
+          bitIndex++;
+          return b;
+        }
+
+        let dirUp = true;
+        for (let x = n - 1; x > 0; x -= 2){
+          if (x === 6) x--; // skip timing column
+          for (let yOffset = 0; yOffset < n; yOffset++){
+            const y = dirUp ? (n-1 - yOffset) : yOffset;
+            for (let dx=0; dx<2; dx++){
+              const xx = x - dx;
+              if (isReserved(m, xx, y)) continue;
+              setModule(m, xx, y, nextBit());
+            }
+          }
+          dirUp = !dirUp;
+        }
+      }
+
+      function maskFunc(mask, x, y){
+        switch(mask){
+          case 0: return ((x + y) % 2) === 0;
+          case 1: return (y % 2) === 0;
+          case 2: return (x % 3) === 0;
+          case 3: return ((x + y) % 3) === 0;
+          case 4: return ((Math.floor(y/2) + Math.floor(x/3)) % 2) === 0;
+          case 5: return (((x*y) % 2) + ((x*y) % 3)) === 0;
+          case 6: return ((((x*y) % 2) + ((x*y) % 3)) % 2) === 0;
+          case 7: return ((((x + y) % 2) + ((x*y) % 3)) % 2) === 0;
+          default: return false;
+        }
+      }
+
+      function applyMask(m, mask){
+        const n = m.length;
+        for (let y=0;y<n;y++){
+          for (let x=0;x<n;x++){
+            // don't mask function patterns & reserved areas (they're already set; but we need a way to detect which are data)
+            // Here: we mask only modules that were not part of finder/timing/alignment/format/dark reserved.
+            // We approximate by re-building a "reserved" matrix by checking known patterns; easiest: treat null as data,
+            // but at this stage all are filled. So we instead compute a conservative skip list based on coordinates.
+            // We'll create an isFunction(x,y) check.
+            if (isFunctionModule(n, x, y)) continue;
+            if (maskFunc(mask, x, y)) m[y][x] ^= 1;
+          }
+        }
+      }
+
+      function isFunctionModule(n, x, y){
+        // Finder + separators areas (top-left, top-right, bottom-left)
+        const inTL = (x <= 8 && y <= 8);
+        const inTR = (x >= n-9 && y <= 8);
+        const inBL = (x <= 8 && y >= n-9);
+        if (inTL || inTR || inBL) return true;
+
+        // Timing patterns
+        if (x === 6 || y === 6) return true;
+
+        // Format info lines
+        if (y === 8 && x <= 8) return true;
+        if (x === 8 && y <= 8) return true;
+        if (y === 8 && x >= n-8) return true;
+        if (x === 8 && y >= n-8) return true;
+
+        // Dark module
+        if (x === 8 && y === n-8) return true;
+
+        // Alignment patterns (versions 2..6) are within 5x5 blocks; we can detect by finding any 5x5 center positions
+        // For our supported versions, centers are at posMap coords; mark those areas as function.
+        // We'll store them globally after pick.
+        if (ALIGN_CENTERS && ALIGN_CENTERS.length){
+          for (const c of ALIGN_CENTERS){
+            if (Math.abs(x - c.x) <= 2 && Math.abs(y - c.y) <= 2) return true;
+          }
+        }
+        return false;
+      }
+
+      function formatBits(level, mask){
+        // format info: 5 bits (EC level + mask), BCH(15,5) with generator 0x537, XOR 0x5412
+        const EC_BITS = { L:1, M:0, Q:3, H:2 }; // per spec
+        let data = (EC_BITS[level] << 3) | mask; // 5 bits
+        let bch = data << 10;
+        const gen = 0x537;
+        for (let i=14;i>=10;i--){
+          if ((bch >> i) & 1){
+            bch ^= gen << (i-10);
+          }
+        }
+        const format = ((data << 10) | (bch & 0x3FF)) ^ 0x5412;
+        return format & 0x7FFF;
+      }
+
+      function writeFormatInfo(m, level, mask){
+        const n = m.length;
+        const fmt = formatBits(level, mask);
+
+        function bit(i){ return (fmt >> i) & 1; } // i=0..14 LSB
+        // placement order (15 bits): per QR spec
+        const coords1 = [
+          [8,0],[8,1],[8,2],[8,3],[8,4],[8,5],[8,7],[8,8],[7,8],[5,8],[4,8],[3,8],[2,8],[1,8],[0,8]
+        ];
+        const coords2 = [
+          [n-1,8],[n-2,8],[n-3,8],[n-4,8],[n-5,8],[n-6,8],[n-7,8],
+          [8,n-8],[8,n-7],[8,n-6],[8,n-5],[8,n-4],[8,n-3],[8,n-2],[8,n-1]
+        ];
+        for (let i=0;i<15;i++){
+          const b = bit(i);
+          const [x1,y1] = coords1[i];
+          const [x2,y2] = coords2[i];
+          m[y1][x1] = b;
+          m[y2][x2] = b;
+        }
+      }
+
+      function penaltyScore(m){
+        const n = m.length;
+        let score = 0;
+
+        // N1: consecutive modules in row/col
+        function linePenalty(get){
+          for (let i=0;i<n;i++){
+            let runColor = get(i,0);
+            let runLen = 1;
+            for (let j=1;j<n;j++){
+              const c = get(i,j);
+              if (c === runColor){
+                runLen++;
+              }else{
+                if (runLen >= 5) score += 3 + (runLen - 5);
+                runColor = c; runLen = 1;
+              }
+            }
+            if (runLen >= 5) score += 3 + (runLen - 5);
+          }
+        }
+        linePenalty((r,c)=>m[r][c]);
+        linePenalty((c,r)=>m[r][c]); // same call style for columns handled by swap below is heavy; do explicit:
+        // fix: explicit columns
+        for (let x=0;x<n;x++){
+          let runColor = m[0][x], runLen = 1;
+          for (let y=1;y<n;y++){
+            const c = m[y][x];
+            if (c === runColor) runLen++;
+            else{
+              if (runLen >= 5) score += 3 + (runLen - 5);
+              runColor = c; runLen = 1;
+            }
+          }
+          if (runLen >= 5) score += 3 + (runLen - 5);
+        }
+
+        // N2: 2x2 blocks
+        for (let y=0;y<n-1;y++){
+          for (let x=0;x<n-1;x++){
+            const v = m[y][x];
+            if (v===m[y][x+1] && v===m[y+1][x] && v===m[y+1][x+1]) score += 3;
+          }
+        }
+
+        // N3: finder-like patterns
+        const pat1 = [1,0,1,1,1,0,1,0,0,0,0];
+        const pat2 = [0,0,0,0,1,0,1,1,1,0,1];
+        function matchRow(y, x0, pat){
+          for (let k=0;k<pat.length;k++){
+            if (m[y][x0+k] !== pat[k]) return false;
+          }
+          return true;
+        }
+        function matchCol(x, y0, pat){
+          for (let k=0;k<pat.length;k++){
+            if (m[y0+k][x] !== pat[k]) return false;
+          }
+          return true;
+        }
+        for (let y=0;y<n;y++){
+          for (let x=0;x<=n-11;x++){
+            if (matchRow(y,x,pat1) || matchRow(y,x,pat2)) score += 40;
+          }
+        }
+        for (let x=0;x<n;x++){
+          for (let y=0;y<=n-11;y++){
+            if (matchCol(x,y,pat1) || matchCol(x,y,pat2)) score += 40;
+          }
+        }
+
+        // N4: balance of dark modules
+        let dark = 0;
+        for (let y=0;y<n;y++) for (let x=0;x<n;x++) dark += (m[y][x] ? 1 : 0);
+        const total = n*n;
+        const k = Math.abs((dark*100/total) - 50);
+        score += Math.floor(k/5) * 10;
+
+        return score;
+      }
+
+      function cloneMatrix(m){
+        return m.map(row => row.slice());
+      }
+
+      // alignment centers global for mask skip
+      let ALIGN_CENTERS = [];
+
+      function buildMatrix(version, level, codewords){
+        const n = sizeForVersion(version);
+        const m = makeMatrix(n);
+
+        addFinder(m, 0, 0);
+        addFinder(m, n-7, 0);
+        addFinder(m, 0, n-7);
+
+        addTiming(m);
+
+        // alignment
+        ALIGN_CENTERS = [];
+        const posMap = {
+          2:[6,18],
+          3:[6,22],
+          4:[6,26],
+          5:[6,30],
+          6:[6,34]
+        };
+        const pos = posMap[version];
+        if (pos){
+          for (let i=0;i<pos.length;i++){
+            for (let j=0;j<pos.length;j++){
+              const x = pos[i], y = pos[j];
+              const isInFinder =
+                (x<=8 && y<=8) ||
+                (x>=n-9 && y<=8) ||
+                (x<=8 && y>=n-9);
+              if (isInFinder) continue;
+              ALIGN_CENTERS.push({x,y});
+            }
+          }
+        }
+        addAlignment(m, version);
+
+        reserveFormatInfo(m);
+
+        // fill remaining null with 0 temporarily to avoid nulls in function penalty calculations after data placement
+        placeData(m, codewords);
+
+        // Choose best mask (0..7) by penalty score
+        let bestMask = 0;
+        let bestScore = Infinity;
+        let bestMatrix = null;
+
+        for (let mask=0; mask<8; mask++){
+          const test = cloneMatrix(m);
+          applyMask(test, mask);
+          writeFormatInfo(test, level, mask);
+          const s = penaltyScore(test);
+          if (s < bestScore){
+            bestScore = s;
+            bestMask = mask;
+            bestMatrix = test;
+          }
+        }
+        return bestMatrix;
+      }
+
+      function renderMatrix(m){
+        const n = m.length;
+        // padding "quiet zone" = 4 modules
+        const qz = 4;
+        const scale = 2; // internal scale for crispness (canvas is 100x100)
+        const modules = n + qz*2;
+        const px = Math.floor(canvas.width / modules);
+        const size = px * modules;
+        // center within canvas
+        const ox = Math.floor((canvas.width - size)/2);
+        const oy = Math.floor((canvas.height - size)/2);
+
+        // background
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        ctx.fillStyle = "#1f1815"; // тёмный "дорогой" цвет
+        for (let y=0;y<modules;y++){
+          for (let x=0;x<modules;x++){
+            const mx = x - qz;
+            const my = y - qz;
+            const v = (mx>=0 && my>=0 && mx<n && my<n) ? m[my][mx] : 0;
+            if (v){
+              ctx.fillRect(ox + x*px, oy + y*px, px, px);
+            }
+          }
+        }
+      }
+
+      // --- Pipeline ---
+      const picked = pickVersionAndLevel(text);
+      const version = picked.version;
+      // for a small poster QR, Q is good, but if chosen by picker it might vary
+      const level = picked.level;
+
+      const dataCw = buildDataCodewords(text, version, level);
+      const eccLen = ECC_CW[version][level];
+      const ecc = rsCompute(dataCw, eccLen);
+      const codewords = interleaveBlocks(dataCw, ecc);
+      const matrix = buildMatrix(version, level, codewords);
+      renderMatrix(matrix);
+
+      // Give canvas an accessible label via title
+      canvas.setAttribute("aria-label", "QR-код для открытия Telegram");
+      canvas.setAttribute("role", "img");
+    })();
+  </script>
+</body>
+</html>
