@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
@@ -23,8 +22,8 @@
       --shadow: 0 24px 60px rgba(42,35,32,.14), 0 6px 18px rgba(42,35,32,.08);
       --shadow-sm: 0 10px 24px rgba(42,35,32,.10);
 
-      --accent:#8b4a2f;          /* тёплый терракотовый */
-      --accent-2:#6f3a25;        /* для active */
+      --accent:#8b4a2f;
+      --accent-2:#6f3a25;
       --accent-soft: rgba(139,74,47,.12);
 
       --ring: rgba(139,74,47,.42);
@@ -51,7 +50,6 @@
       overflow-x:hidden;
     }
 
-    /* Декоративные blobs без картинок */
     body::before, body::after{
       content:"";
       position:fixed;
@@ -63,7 +61,7 @@
       opacity:.32;
       pointer-events:none;
       z-index:-1;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 228, 200, .95), rgba(255, 205, 170, 0) 62%);
+      background: radial-gradient(circle at 30% 30%, rgba(255, 228, 200, .95), rgba(255, 205, 170, 0) 60%);
       transform: translate3d(0,0,0);
     }
     body::before{
@@ -99,7 +97,6 @@
       position:relative;
     }
 
-    /* тонкая внутренняя обводка */
     .card::before{
       content:"";
       position:absolute;
@@ -135,6 +132,13 @@
       font-size: clamp(26px, 3.2vw, 40px);
       letter-spacing:-0.02em;
       line-height:1.08;
+    }
+
+    h2{
+      margin:0;
+      font-size: clamp(20px, 2.4vw, 28px);
+      letter-spacing:-0.02em;
+      line-height:1.15;
     }
 
     .role{
@@ -196,11 +200,17 @@
       border-radius: 999px;
       box-shadow: 0 10px 22px rgba(42,35,32,.06);
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+      color: var(--text);
+      text-decoration: none;
     }
     .servicePill:hover{
       transform: translateY(-1px);
       box-shadow: var(--shadow-sm);
       background: rgba(255, 250, 246, .78);
+    }
+    .servicePill:active{
+      transform: translateY(0px);
+      box-shadow: 0 10px 18px rgba(42,35,32,.08);
     }
     .serviceIcon{
       width:18px; height:18px;
@@ -273,6 +283,7 @@
       border-bottom: 1px solid rgba(139,74,47,.25);
     }
     a:hover{ border-bottom-color: rgba(139,74,47,.55); }
+    .servicePill, .btn, .ghostBtn { border-bottom: none; }
 
     .ctaRow{
       display:flex;
@@ -312,7 +323,33 @@
       width:18px;height:18px; stroke: rgba(255,255,255,.92);
     }
 
-    /* QR блок */
+    .ghostBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.56);
+      border: 1px solid rgba(90,50,30,.14);
+      box-shadow: 0 12px 20px rgba(42,35,32,.06);
+      color: var(--text);
+      font-weight: 650;
+      transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+      user-select:none;
+      width: fit-content;
+    }
+    .ghostBtn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.66);
+      box-shadow: 0 16px 26px rgba(42,35,32,.08);
+    }
+    .ghostBtn:active{
+      transform: translateY(0px);
+      box-shadow: 0 12px 20px rgba(42,35,32,.06);
+    }
+    .ghostBtn svg{ width:18px;height:18px; stroke: var(--accent); }
+
     .qrBlock{
       display:flex;
       align-items:center;
@@ -361,22 +398,80 @@
     }
     .qrLink:hover{ border-bottom-color: rgba(139,74,47,.6); }
 
-    /* Разделители */
     .divider{
       height:1px;
       background: linear-gradient(90deg, rgba(90,50,30,0), rgba(90,50,30,.14), rgba(90,50,30,0));
       margin: 2px 0;
     }
 
-    /* Доступность: фокус */
-    a:focus-visible, .btn:focus-visible, button:focus-visible{
+    a:focus-visible, .btn:focus-visible, .ghostBtn:focus-visible, button:focus-visible{
       outline: 3px solid var(--ring);
       outline-offset: 3px;
       border-radius: 999px;
     }
     .contactRow a:focus-visible{ border-radius: 8px; }
 
-    /* Мобильная адаптация */
+    [data-view] { display:none; }
+    [data-view].is-active { display:block; }
+
+    /* Убираем дефолтную (чёрную) обводку фокуса у секций с tabindex */
+    [data-view]:focus,
+    [data-view]:focus-visible{
+      outline: none !important;
+    }
+
+    .detailHeader{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 14px;
+      flex-wrap:wrap;
+    }
+
+    .detailCard{
+      background: rgba(255,255,255,.56);
+      border: 1px solid rgba(90,50,30,.12);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 10px 20px rgba(42,35,32,.05);
+      padding: 14px 14px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+
+    .lead{
+      margin:0;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--text);
+      max-width: 70ch;
+    }
+
+    .miniTitle{
+      margin:0;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    ul.clean{
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+    ul.clean li{ margin: 6px 0; }
+
+    .detailFooter{
+      display:flex;
+      justify-content:flex-start;
+      gap: 12px;
+      flex-wrap:wrap;
+      margin-top: 6px;
+    }
+
     @media (max-width: 520px){
       .servicesGrid{ grid-template-columns: 1fr; }
       .contactLabel{ min-width: 74px; }
@@ -394,6 +489,7 @@
       canvas{ width: 112px; height:112px; }
       .ctaRow{ flex-direction:column; align-items:stretch; }
       .btn{ width:100%; }
+      .ghostBtn{ width:100%; }
     }
   </style>
 </head>
@@ -401,206 +497,610 @@
   <main class="wrap">
     <article class="card" aria-label="Электронная визитка Wildberries Expert">
       <div class="inner">
-        <!-- A) Шапка -->
-        <header class="header">
-          <div class="nameRow">
-            <div>
-              <h1>Wildberries Expert</h1>
-              <p class="role">Продвижение товаров на Wildberries</p>
+
+        <section data-view="home" class="is-active" aria-label="Основная страница" tabindex="-1">
+          <header class="header">
+            <div class="nameRow">
+              <div>
+                <h1>Wildberries Expert</h1>
+                <p class="role">Продвижение товаров на Wildberries</p>
+              </div>
+              <div class="badge" aria-label="Фокус: SEO, реклама, unit-экономика">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3v3m0 12v3M3 12h3m12 0h3" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M12 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10Z" stroke-width="1.6"/>
+                </svg>
+                SEO • WB Ads • Unit-экономика
+              </div>
             </div>
-            <div class="badge" aria-label="Фокус: SEO, реклама, unit-экономика">
+
+            <p class="offer">
+              Продвигаю товары на Wildberries: SEO карточек + внутренняя реклама + unit-экономика. Вывожу позиции в ТОП, усиливаю конверсию и держу под контролем прибыльность.
+            </p>
+          </header>
+
+          <div class="divider" role="separator" aria-hidden="true"></div>
+
+          <section aria-label="Услуги">
+            <div class="sectionTitle">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 4h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" stroke-width="1.6"/>
+                <path d="M8 8h8M8 12h8M8 16h6" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              Услуги
+            </div>
+
+            <div class="servicesGrid" role="list">
+              <a class="servicePill" role="listitem" href="#svc-seo" aria-label="Открыть страницу услуги: SEO карточек и семантика" data-nav>
+                <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M10.5 18.5a7 7 0 1 1 4.95-2.05L21 22" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M8.5 11h4.8" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <div class="serviceText">SEO карточек и семантика</div>
+              </a>
+
+              <a class="servicePill" role="listitem" href="#svc-ads" aria-label="Открыть страницу услуги: Внутренняя реклама (WB Ads)" data-nav>
+                <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 19V9" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M12 19V5" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M19 19v-7" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M4 19h16" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <div class="serviceText">Внутренняя реклама (WB Ads)</div>
+              </a>
+
+              <a class="servicePill" role="listitem" href="#svc-unit" aria-label="Открыть страницу услуги: Unit-экономика и рентабельность" data-nav>
+                <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3v18" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M7.5 7.5c0-1.7 1.7-3 4.5-3s4.5 1.3 4.5 3-1.7 3-4.5 3-4.5 1.3-4.5 3 1.7 3 4.5 3 4.5-1.3 4.5-3" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <div class="serviceText">Unit-экономика и рентабельность</div>
+              </a>
+
+              <a class="servicePill" role="listitem" href="#svc-content" aria-label="Открыть страницу услуги: Контент и упаковка карточки" data-nav>
+                <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M7 17l10-10" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M8.5 7.5h.01M15.5 16.5h.01" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M6 6h12v12H6z" stroke-width="1.6" stroke-linejoin="round"/>
+                </svg>
+                <div class="serviceText">Контент и упаковка карточки</div>
+              </a>
+
+              <a class="servicePill" role="listitem" href="#svc-analytics" aria-label="Открыть страницу услуги: Аналитика и отчётность" data-nav>
+                <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 19V5" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M4 19h16" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M8 15l3-4l3 2l4-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="serviceText">Аналитика и отчётность</div>
+              </a>
+
+              <a class="servicePill" role="listitem" href="#svc-stock" aria-label="Открыть страницу услуги: Остатки и поставки" data-nav>
+                <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M7 7h10v10H7z" stroke-width="1.6" />
+                  <path d="M7 11h10" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M10 7v10" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <div class="serviceText">Остатки и поставки</div>
+              </a>
+
+              <a class="servicePill" role="listitem" href="#svc-reviews" aria-label="Открыть страницу услуги: Отзывы и репутация" data-nav>
+                <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 21s7-4.6 7-11a4 4 0 0 0-7-2a4 4 0 0 0-7 2c0 6.4 7 11 7 11Z" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M9.5 12l1.8 1.8L15.5 9.6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="serviceText">Отзывы и репутация</div>
+              </a>
+
+              <a class="servicePill" role="listitem" href="#svc-market" aria-label="Открыть страницу услуги: Конкуренты и рынок" data-nav>
+                <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9s-9 4.03-9 9s4.03 9 9 9Z" stroke-width="1.6"/>
+                  <path d="M8 13c1.2-1.1 2.6-1.6 4-1.6s2.8.5 4 1.6" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M9 10h.01M15 10h.01" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <div class="serviceText">Конкуренты и рынок</div>
+              </a>
+            </div>
+          </section>
+
+          <div class="divider" role="separator" aria-hidden="true"></div>
+
+          <section aria-label="Результаты">
+            <div class="sectionTitle">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 18V6" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M4 18h16" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M7 15l3-4l3 2l4-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Результаты
+            </div>
+
+            <div class="metrics">
+              <div class="metricRow" role="group" aria-label="Рост продаж">
+                <div class="metricLabel">Рост продаж</div>
+                <div class="metricValue">+24% за 8 недель</div>
+              </div>
+              <div class="metricRow" role="group" aria-label="ДРР">
+                <div class="metricLabel">ДРР</div>
+                <div class="metricValue">8.7% (−2.1 п.п.)</div>
+              </div>
+              <div class="metricRow" role="group" aria-label="ROMI">
+                <div class="metricLabel">ROMI</div>
+                <div class="metricValue">225%</div>
+              </div>
+              <div class="metricRow" role="group" aria-label="Конверсия карточки (CR)">
+                <div class="metricLabel">Конверсия карточки (CR)</div>
+                <div class="metricValue">+15%</div>
+              </div>
+              <div class="metricRow" role="group" aria-label="CTR">
+                <div class="metricLabel">CTR</div>
+                <div class="metricValue">+3.8%</div>
+              </div>
+              <div class="metricRow" role="group" aria-label="Выкуп">
+                <div class="metricLabel">Выкуп</div>
+                <div class="metricValue">88% (+4 п.п.)</div>
+              </div>
+            </div>
+          </section>
+
+          <div class="divider" role="separator" aria-hidden="true"></div>
+
+          <section aria-label="Контакты">
+            <div class="sectionTitle">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 16.5v2a2 2 0 0 1-2.2 2c-9.5-.9-14.5-5.9-15.4-15.4A2 2 0 0 1 5.5 3h2a2 2 0 0 1 2 1.7c.1.8.3 1.6.6 2.4a2 2 0 0 1-.5 2.1L8.9 10a14 14 0 0 0 5.1 5.1l.8-.7a2 2 0 0 1 2.1-.5c.8.3 1.6.5 2.4.6a2 2 0 0 1 1.7 2Z" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+              Контакты
+            </div>
+
+            <div class="contacts">
+              <div class="contactRow">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 7h16v10H4z" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M4 8l8 6l8-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="contactLabel">Email</div>
+                <a href="mailto:expert@uniteconomy.ru" aria-label="Написать на email expert@uniteconomy.ru">expert@uniteconomy.ru</a>
+              </div>
+
+              <div class="contactRow">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M21 5.5L3.6 12.3a1 1 0 0 0 .07 1.88l4.6 1.6l1.8 4.6a1 1 0 0 0 1.74.2l2.6-3.3l4.9 3.2a1 1 0 0 0 1.52-.67L22 6.6a1 1 0 0 0-1-1.1Z" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M8.3 15.7l6.9-6.2" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <div class="contactLabel">Telegram</div>
+                <a href="https://t.me/STRANNIK76" target="_blank" rel="noopener" aria-label="Открыть Telegram @STRANNIK76">@STRANNIK76</a>
+              </div>
+            </div>
+          </section>
+
+          <section aria-label="Связаться">
+            <div class="ctaRow">
+              <a class="btn" href="https://t.me/STRANNIK76" target="_blank" rel="noopener" aria-label="Написать в Telegram">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M21 5.5L3.6 12.3a1 1 0 0 0 .07 1.88l4.6 1.6l1.8 4.6a1 1 0 0 0 1.74.2l2.6-3.3l4.9 3.2a1 1 0 0 0 1.52-.67L22 6.6a1 1 0 0 0-1-1.1Z" stroke-width="1.8" stroke-linejoin="round"/>
+                  <path d="M8.3 15.7l6.9-6.2" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                Написать в Telegram
+              </a>
+
+              <div class="qrBlock" aria-label="QR код Telegram">
+                <div class="qrCanvasWrap" aria-hidden="true">
+                  <canvas id="qr" width="100" height="100"></canvas>
+                </div>
+                <div class="qrText">
+                  <p class="qrTitle">Сканируй — откроется Telegram</p>
+                  <p class="qrSub">QR ведёт на @STRANNIK76.</p>
+                  <a class="qrLink" href="https://t.me/STRANNIK76" target="_blank" rel="noopener" aria-label="Открыть ссылку Telegram">t.me/STRANNIK76</a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section data-view="svc-seo" aria-label="Услуга: SEO карточек и семантика" tabindex="-1">
+          <div class="detailHeader">
+            <div>
+              <div class="sectionTitle">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M10.5 18.5a7 7 0 1 1 4.95-2.05L21 22" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M8.5 11h4.8" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                Услуга
+              </div>
+              <h2>SEO карточек и семантика</h2>
+            </div>
+            <div class="badge" aria-label="Результат: рост видимости и органики">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M12 3v3m0 12v3M3 12h3m12 0h3" stroke-width="1.6" stroke-linecap="round"/>
                 <path d="M12 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10Z" stroke-width="1.6"/>
               </svg>
-              SEO • WB Ads • Unit-экономика
+              Видимость • Органика
             </div>
           </div>
 
-          <p class="offer">
-            Продвигаю товары на Wildberries: SEO карточек + внутренняя реклама + unit-экономика. Вывожу позиции в ТОП, усиливаю конверсию и держу под контролем прибыльность.
-          </p>
-        </header>
+          <div class="detailCard">
+            <p class="lead">Настраиваю карточку так, чтобы она попадала в релевантные запросы и стабильно набирала органические показы — без «магии», только логика поиска и качество карточки.</p>
 
-        <div class="divider" role="separator" aria-hidden="true"></div>
+            <p class="miniTitle">Что делаем</p>
+            <ul class="clean">
+              <li>Собираем семантику: ключи, кластеры, приоритеты.</li>
+              <li>Правим заголовок, характеристики, описание и атрибуты под поиск.</li>
+              <li>Убираем «шум»: дубли, нерелевантные слова, ошибки.</li>
+              <li>Собираем структуру: какие запросы ведём в какие карточки/вариации.</li>
+            </ul>
 
-        <!-- B) Услуги -->
-        <section aria-label="Услуги">
-          <div class="sectionTitle">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M7 4h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" stroke-width="1.6"/>
-              <path d="M8 8h8M8 12h8M8 16h6" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-            Услуги
+            <p class="miniTitle">Что получаете</p>
+            <ul class="clean">
+              <li>Понятный список ключей и план внедрения.</li>
+              <li>Карточку, которая лучше индексируется и чаще показывается.</li>
+              <li>Рост органики и более дешёвые продажи в связке с рекламой.</li>
+            </ul>
           </div>
 
-          <div class="servicesGrid" role="list">
-            <div class="servicePill" role="listitem">
-              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M10.5 18.5a7 7 0 1 1 4.95-2.05L21 22" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M8.5 11h4.8" stroke-width="1.6" stroke-linecap="round"/>
+          <div class="detailFooter">
+            <a class="ghostBtn" href="#home" aria-label="Вернуться на основную страницу" data-nav>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 18l-6-6l6-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <div class="serviceText">SEO карточек и семантика</div>
-            </div>
+              Вернуться на основную страницу
+            </a>
+          </div>
+        </section>
 
-            <div class="servicePill" role="listitem">
-              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 19V9" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M12 19V5" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M19 19v-7" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M4 19h16" stroke-width="1.6" stroke-linecap="round"/>
+        <section data-view="svc-ads" aria-label="Услуга: Внутренняя реклама (WB Ads)" tabindex="-1">
+          <div class="detailHeader">
+            <div>
+              <div class="sectionTitle">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 19V9" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M12 19V5" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M19 19v-7" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M4 19h16" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                Услуга
+              </div>
+              <h2>Внутренняя реклама (WB Ads)</h2>
+            </div>
+            <div class="badge" aria-label="Результат: управляемые продажи">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 12h16" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M14 6l6 6l-6 6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <div class="serviceText">Внутренняя реклама (WB Ads)</div>
+              Трафик • Контроль
             </div>
+          </div>
 
-            <div class="servicePill" role="listitem">
-              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 3v18" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M7.5 7.5c0-1.7 1.7-3 4.5-3s4.5 1.3 4.5 3-1.7 3-4.5 3-4.5 1.3-4.5 3 1.7 3 4.5 3 4.5-1.3 4.5-3" stroke-width="1.6" stroke-linecap="round"/>
+          <div class="detailCard">
+            <p class="lead">Запускаю рекламу так, чтобы она давала продажи по понятной цене и не «съедала» маржу: цели, структура кампаний и регулярная оптимизация.</p>
+
+            <p class="miniTitle">Что делаем</p>
+            <ul class="clean">
+              <li>Определяем KPI: ДРР/ROMI, бюджеты, приоритетные SKU.</li>
+              <li>Строим структуру кампаний: разделяем тёплые/холодные запросы.</li>
+              <li>Чистим и расширяем семантику: минус-слова, новые кластеры.</li>
+              <li>Оптимизируем ставки и размещения по данным, а не «на удачу».</li>
+            </ul>
+
+            <p class="miniTitle">Что получаете</p>
+            <ul class="clean">
+              <li>Прозрачное управление рекламой и понятные отчёты.</li>
+              <li>Снижение лишних трат и рост доли «правильных» продаж.</li>
+              <li>Усиление позиций карточки за счёт связки «реклама + SEO».</li>
+            </ul>
+          </div>
+
+          <div class="detailFooter">
+            <a class="ghostBtn" href="#home" aria-label="Вернуться на основную страницу" data-nav>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 18l-6-6l6-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <div class="serviceText">Unit-экономика и рентабельность</div>
-            </div>
+              Вернуться на основную страницу
+            </a>
+          </div>
+        </section>
 
-            <div class="servicePill" role="listitem">
-              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 17l10-10" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M8.5 7.5h.01M15.5 16.5h.01" stroke-width="2" stroke-linecap="round"/>
-                <path d="M6 6h12v12H6z" stroke-width="1.6" stroke-linejoin="round"/>
-              </svg>
-              <div class="serviceText">Контент и упаковка карточки</div>
+        <section data-view="svc-unit" aria-label="Услуга: Unit-экономика и рентабельность" tabindex="-1">
+          <div class="detailHeader">
+            <div>
+              <div class="sectionTitle">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3v18" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M7.5 7.5c0-1.7 1.7-3 4.5-3s4.5 1.3 4.5 3-1.7 3-4.5 3-4.5 1.3-4.5 3 1.7 3 4.5 3 4.5-1.3 4.5-3" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                Услуга
+              </div>
+              <h2>Unit-экономика и рентабельность</h2>
             </div>
-
-            <div class="servicePill" role="listitem">
-              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <div class="badge" aria-label="Результат: прибыль под контролем">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M4 19V5" stroke-width="1.6" stroke-linecap="round"/>
                 <path d="M4 19h16" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M8 15l3-4l3 2l4-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 14l3-3l3 2l4-5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <div class="serviceText">Аналитика и отчётность</div>
-            </div>
-
-            <div class="servicePill" role="listitem">
-              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 7h10v10H7z" stroke-width="1.6" />
-                <path d="M7 11h10" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M10 7v10" stroke-width="1.6" stroke-linecap="round"/>
-              </svg>
-              <div class="serviceText">Остатки и поставки</div>
-            </div>
-
-            <div class="servicePill" role="listitem">
-              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 21s7-4.6 7-11a4 4 0 0 0-7-2a4 4 0 0 0-7 2c0 6.4 7 11 7 11Z" stroke-width="1.6" stroke-linejoin="round"/>
-                <path d="M9.5 12l1.8 1.8L15.5 9.6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <div class="serviceText">Отзывы и репутация</div>
-            </div>
-
-            <div class="servicePill" role="listitem">
-              <svg class="serviceIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9s-9 4.03-9 9s4.03 9 9 9Z" stroke-width="1.6"/>
-                <path d="M8 13c1.2-1.1 2.6-1.6 4-1.6s2.8.5 4 1.6" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M9 10h.01M15 10h.01" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <div class="serviceText">Конкуренты и рынок</div>
+              Маржа • Решения
             </div>
           </div>
-        </section>
 
-        <div class="divider" role="separator" aria-hidden="true"></div>
+          <div class="detailCard">
+            <p class="lead">Считаю прибыльность на уровне SKU и сценариев: где вы зарабатываете, где теряете, и что именно нужно поправить (цена, реклама, логистика, скидки).</p>
 
-        <!-- C) Результаты -->
-        <section aria-label="Результаты">
-          <div class="sectionTitle">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 18V6" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M4 18h16" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M7 15l3-4l3 2l4-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Результаты
+            <p class="miniTitle">Что делаем</p>
+            <ul class="clean">
+              <li>Собираем модель: закуп, комиссии, логистика, реклама, скидки.</li>
+              <li>Считаем маржу и «потолок» ДРР по каждому SKU.</li>
+              <li>Разбираем сценарии: цена/скидка/бюджет/объём.</li>
+              <li>Фиксируем правила: когда масштабировать, когда стоп.</li>
+            </ul>
+
+            <p class="miniTitle">Что получаете</p>
+            <ul class="clean">
+              <li>Чёткую картину прибыльности и приоритеты по ассортименту.</li>
+              <li>Рекомендации по цене/скидкам/рекламе без потери маржи.</li>
+              <li>Осознанный рост: продажи и прибыль идут вместе.</li>
+            </ul>
           </div>
 
-          <div class="metrics">
-            <div class="metricRow" role="group" aria-label="Рост продаж">
-              <div class="metricLabel">Рост продаж</div>
-              <div class="metricValue">+28% за 8 недель</div>
-            </div>
-            <div class="metricRow" role="group" aria-label="ДРР">
-              <div class="metricLabel">ДРР</div>
-              <div class="metricValue">9.0% (-2.5 п.п.)</div>
-            </div>
-            <div class="metricRow" role="group" aria-label="ROMI">
-              <div class="metricLabel">ROMI</div>
-              <div class="metricValue">240%</div>
-            </div>
-            <div class="metricRow" role="group" aria-label="Конверсия карточки (CR)">
-              <div class="metricLabel">Конверсия карточки (CR)</div>
-              <div class="metricValue">+18%</div>
-            </div>
-            <div class="metricRow" role="group" aria-label="CTR">
-              <div class="metricLabel">CTR</div>
-              <div class="metricValue">4.2%</div>
-            </div>
-            <div class="metricRow" role="group" aria-label="Выкуп">
-              <div class="metricLabel">Выкуп</div>
-              <div class="metricValue">90% ( +5 п.п.)</div>
-            </div>
-          </div>
-        </section>
-
-        <div class="divider" role="separator" aria-hidden="true"></div>
-
-        <!-- D) Контакты -->
-        <section aria-label="Контакты">
-          <div class="sectionTitle">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M21 16.5v2a2 2 0 0 1-2.2 2c-9.5-.9-14.5-5.9-15.4-15.4A2 2 0 0 1 5.5 3h2a2 2 0 0 1 2 1.7c.1.8.3 1.6.6 2.4a2 2 0 0 1-.5 2.1L8.9 10a14 14 0 0 0 5.1 5.1l.8-.7a2 2 0 0 1 2.1-.5c.8.3 1.6.5 2.4.6a2 2 0 0 1 1.7 2Z" stroke-width="1.6" stroke-linejoin="round"/>
-            </svg>
-            Контакты
-          </div>
-
-          <div class="contacts">
-            <div class="contactRow">
+          <div class="detailFooter">
+            <a class="ghostBtn" href="#home" aria-label="Вернуться на основную страницу" data-nav>
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 7h16v10H4z" stroke-width="1.6" stroke-linejoin="round"/>
-                <path d="M4 8l8 6l8-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15 18l-6-6l6-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <div class="contactLabel">Email</div>
-              <a href="mailto:expert@uniteconomy.ru" aria-label="Написать на email expert@uniteconomy.ru">expert@uniteconomy.ru</a>
-            </div>
-
-            <div class="contactRow">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M21 5.5L3.6 12.3a1 1 0 0 0 .07 1.88l4.6 1.6l1.8 4.6a1 1 0 0 0 1.74.2l2.6-3.3l4.9 3.2a1 1 0 0 0 1.52-.67L22 6.6a1 1 0 0 0-1-1.1Z" stroke-width="1.6" stroke-linejoin="round"/>
-                <path d="M8.3 15.7l6.9-6.2" stroke-width="1.6" stroke-linecap="round"/>
-              </svg>
-              <div class="contactLabel">Telegram</div>
-              <a href="https://t.me/STRANNIK76" target="_blank" rel="noopener" aria-label="Открыть Telegram @STRANNIK76">@STRANNIK76</a>
-            </div>
-          </div>
-        </section>
-
-        <!-- E) CTA + F) QR -->
-        <section aria-label="Связаться">
-          <div class="ctaRow">
-            <a class="btn" href="https://t.me/STRANNIK76" target="_blank" rel="noopener" aria-label="Написать в Telegram">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M21 5.5L3.6 12.3a1 1 0 0 0 .07 1.88l4.6 1.6l1.8 4.6a1 1 0 0 0 1.74.2l2.6-3.3l4.9 3.2a1 1 0 0 0 1.52-.67L22 6.6a1 1 0 0 0-1-1.1Z" stroke-width="1.8" stroke-linejoin="round"/>
-                <path d="M8.3 15.7l6.9-6.2" stroke-width="1.8" stroke-linecap="round"/>
-              </svg>
-              Написать в Telegram
+              Вернуться на основную страницу
             </a>
+          </div>
+        </section>
 
-            <div class="qrBlock" aria-label="QR код Telegram">
-              <div class="qrCanvasWrap" aria-hidden="true">
-                <canvas id="qr" width="100" height="100"></canvas>
+        <section data-view="svc-content" aria-label="Услуга: Контент и упаковка карточки" tabindex="-1">
+          <div class="detailHeader">
+            <div>
+              <div class="sectionTitle">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 6h12v12H6z" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M8 10h8M8 14h6" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                Услуга
               </div>
-              <div class="qrText">
-                <p class="qrTitle">Сканируй — откроется Telegram</p>
-                <p class="qrSub">QR ведёт на @STRANNIK76.</p>
-                <a class="qrLink" href="https://t.me/STRANNIK76" target="_blank" rel="noopener" aria-label="Открыть ссылку Telegram">t.me/STRANNIK76</a>
-              </div>
+              <h2>Контент и упаковка карточки</h2>
             </div>
+            <div class="badge" aria-label="Результат: лучше конверсия">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9s-9 4.03-9 9s4.03 9 9 9Z" stroke-width="1.6"/>
+                <path d="M8.5 12.5l2.2 2.2l4.8-5.2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              УТП • Доверие
+            </div>
+          </div>
+
+          <div class="detailCard">
+            <p class="lead">Делаю карточку понятной и убедительной: чтобы покупатель быстро понял ценность, не сомневался и чаще нажимал «Купить».</p>
+
+            <p class="miniTitle">Что делаем</p>
+            <ul class="clean">
+              <li>Проверяем «первый экран»: название, фото-логика, ключевые выгоды.</li>
+              <li>Упорядочиваем смыслы: УТП, характеристики, ответы на возражения.</li>
+              <li>Делаем текст и блоки короче и яснее — без лишнего.</li>
+              <li>Согласуем акценты под целевую аудиторию и сценарии покупки.</li>
+            </ul>
+
+            <p class="miniTitle">Что получаете</p>
+            <ul class="clean">
+              <li>Более сильную карточку, которая лучше конвертирует трафик.</li>
+              <li>Меньше вопросов/сомнений → выше CR и выкуп.</li>
+              <li>Базу для SEO и рекламы: всё работает в одной системе.</li>
+            </ul>
+          </div>
+
+          <div class="detailFooter">
+            <a class="ghostBtn" href="#home" aria-label="Вернуться на основную страницу" data-nav>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 18l-6-6l6-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Вернуться на основную страницу
+            </a>
+          </div>
+        </section>
+
+        <section data-view="svc-analytics" aria-label="Услуга: Аналитика и отчётность" tabindex="-1">
+          <div class="detailHeader">
+            <div>
+              <div class="sectionTitle">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 19V5" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M4 19h16" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M8 15l3-4l3 2l4-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Услуга
+              </div>
+              <h2>Аналитика и отчётность</h2>
+            </div>
+            <div class="badge" aria-label="Результат: ясные решения">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v18" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M7 8h10M7 12h10M7 16h7" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              Понятно • Регулярно
+            </div>
+          </div>
+
+          <div class="detailCard">
+            <p class="lead">Настраиваю отчётность так, чтобы вы быстро понимали, что происходит: где рост, где просадка, что менять в рекламе, цене и ассортименте.</p>
+
+            <p class="miniTitle">Что делаем</p>
+            <ul class="clean">
+              <li>Определяем ключевые метрики: продажи, маржа, реклама, CR/CTR, выкуп.</li>
+              <li>Собираем структуру отчётов по SKU/категория/кампания.</li>
+              <li>Вводим регулярный ритм: что смотрим ежедневно/еженедельно/ежемесячно.</li>
+              <li>Формируем «лист действий»: какие решения принять по итогам.</li>
+            </ul>
+
+            <p class="miniTitle">Что получаете</p>
+            <ul class="clean">
+              <li>Чёткую картину по бизнесу и рекламе без «табличного хаоса».</li>
+              <li>Быстрые точки роста и понятные причины отклонений.</li>
+              <li>Меньше импульсивных действий — больше контролируемого результата.</li>
+            </ul>
+          </div>
+
+          <div class="detailFooter">
+            <a class="ghostBtn" href="#home" aria-label="Вернуться на основную страницу" data-nav>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 18l-6-6l6-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Вернуться на основную страницу
+            </a>
+          </div>
+        </section>
+
+        <section data-view="svc-stock" aria-label="Услуга: Остатки и поставки" tabindex="-1">
+          <div class="detailHeader">
+            <div>
+              <div class="sectionTitle">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M7 7h10v10H7z" stroke-width="1.6" />
+                  <path d="M7 11h10" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M10 7v10" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                Услуга
+              </div>
+              <h2>Остатки и поставки</h2>
+            </div>
+            <div class="badge" aria-label="Результат: меньше OOS и потерь">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3 7h18" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M6 7l1 14h10l1-14" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M9 11v6M12 11v6M15 11v6" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              Наличие • Скорость
+            </div>
+          </div>
+
+          <div class="detailCard">
+            <p class="lead">Помогаю держать товар в наличии и не замораживать деньги в лишних остатках: планируем поставки под спрос и сезонность.</p>
+
+            <p class="miniTitle">Что делаем</p>
+            <ul class="clean">
+              <li>Оцениваем текущие остатки, оборачиваемость и риски OOS/перелива.</li>
+              <li>Строим план пополнения: точки заказа и целевые запасы.</li>
+              <li>Учитываем промо и рекламу: рост спроса заранее, без сюрпризов.</li>
+              <li>Выделяем «проблемные SKU»: где лучше сократить/распродать/переформатировать.</li>
+            </ul>
+
+            <p class="miniTitle">Что получаете</p>
+            <ul class="clean">
+              <li>Стабильное наличие в нужных SKU → меньше потерь продаж.</li>
+              <li>Меньше замороженных денег и штрафов за просадку доступности.</li>
+              <li>Понятный календарь действий по поставкам.</li>
+            </ul>
+          </div>
+
+          <div class="detailFooter">
+            <a class="ghostBtn" href="#home" aria-label="Вернуться на основную страницу" data-nav>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 18l-6-6l6-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Вернуться на основную страницу
+            </a>
+          </div>
+        </section>
+
+        <section data-view="svc-reviews" aria-label="Услуга: Отзывы и репутация" tabindex="-1">
+          <div class="detailHeader">
+            <div>
+              <div class="sectionTitle">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 21s7-4.6 7-11a4 4 0 0 0-7-2a4 4 0 0 0-7 2c0 6.4 7 11 7 11Z" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="M9.5 12l1.8 1.8L15.5 9.6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Услуга
+              </div>
+              <h2>Отзывы и репутация</h2>
+            </div>
+            <div class="badge" aria-label="Результат: доверие и выкуп">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 11.5a5 5 0 0 1 10 0v7H7v-7Z" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M9 11.5V10a3 3 0 0 1 6 0v1.5" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              Доверие • Качество
+            </div>
+          </div>
+
+          <div class="detailCard">
+            <p class="lead">Выстраиваю работу с отзывами так, чтобы повышать доверие и выкуп: усиливаем сильные стороны и аккуратно закрываем причины негатива.</p>
+
+            <p class="miniTitle">Что делаем</p>
+            <ul class="clean">
+              <li>Разбираем типовые причины негативных отзывов (качество/ожидания/упаковка/размер).</li>
+              <li>Правим карточку и контент, чтобы уменьшить «ложные ожидания».</li>
+              <li>Готовим шаблоны ответов: вежливо, быстро, по делу.</li>
+              <li>Выделяем точки улучшения продукта/комплектации, если нужно.</li>
+            </ul>
+
+            <p class="miniTitle">Что получаете</p>
+            <ul class="clean">
+              <li>Более сильный социальный сигнал → выше конверсия и выкуп.</li>
+              <li>Меньше повторяющихся проблем и возвратов.</li>
+              <li>Понятный процесс: кто/когда/как отвечает и что улучшает.</li>
+            </ul>
+          </div>
+
+          <div class="detailFooter">
+            <a class="ghostBtn" href="#home" aria-label="Вернуться на основную страницу" data-nav>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 18l-6-6l6-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Вернуться на основную страницу
+            </a>
+          </div>
+        </section>
+
+        <section data-view="svc-market" aria-label="Услуга: Конкуренты и рынок" tabindex="-1">
+          <div class="detailHeader">
+            <div>
+              <div class="sectionTitle">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9s-9 4.03-9 9s4.03 9 9 9Z" stroke-width="1.6"/>
+                  <path d="M8 13c1.2-1.1 2.6-1.6 4-1.6s2.8.5 4 1.6" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M9 10h.01M15 10h.01" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Услуга
+              </div>
+              <h2>Конкуренты и рынок</h2>
+            </div>
+            <div class="badge" aria-label="Результат: понятная стратегия">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2l3 7l7 3l-7 3l-3 7l-3-7l-7-3l7-3l3-7Z" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+              Позиционирование
+            </div>
+          </div>
+
+          <div class="detailCard">
+            <p class="lead">Сравниваю вас с конкурентами по цене, контенту и предложениям — и нахожу, где можно обойти рынок без «демпинга» и без лишних затрат.</p>
+
+            <p class="miniTitle">Что делаем</p>
+            <ul class="clean">
+              <li>Смотрим конкурентов: цены, скидки, контент, отзывы, УТП, ассортимент.</li>
+              <li>Определяем «правила категории»: что покупателю важно именно здесь.</li>
+              <li>Выбираем стратегию: чем выигрываем (ценность, набор, качество, сервис).</li>
+              <li>Формируем план улучшений карточки и оффера под рынок.</li>
+            </ul>
+
+            <p class="miniTitle">Что получаете</p>
+            <ul class="clean">
+              <li>Понимание, почему выбирают конкурентов — и как это исправить.</li>
+              <li>Рекомендации по цене/оферу/контенту без потери маржи.</li>
+              <li>Более точный рост: не «всем для всех», а в нужную аудиторию.</li>
+            </ul>
+          </div>
+
+          <div class="detailFooter">
+            <a class="ghostBtn" href="#home" aria-label="Вернуться на основную страницу" data-nav>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 18l-6-6l6-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Вернуться на основную страницу
+            </a>
           </div>
         </section>
 
@@ -609,8 +1109,32 @@
   </main>
 
   <script>
-    /* Мини-генератор QR (версии 1..6, ECC L/M/Q/H) без внешних зависимостей.
-       Упрощённая, компактная реализация для визитки. */
+    (function(){
+      "use strict";
+      const views = Array.from(document.querySelectorAll("[data-view]"));
+      const viewMap = new Map(views.map(v => [v.getAttribute("data-view"), v]));
+      const DEFAULT = "home";
+
+      function currentKey(){
+        const h = (location.hash || "").replace("#", "").trim();
+        return viewMap.has(h) ? h : DEFAULT;
+      }
+
+      function show(key){
+        views.forEach(v => v.classList.remove("is-active"));
+        const el = viewMap.get(key) || viewMap.get(DEFAULT);
+        el.classList.add("is-active");
+        try{ el.focus({ preventScroll:true }); } catch(e){ el.focus(); }
+      }
+
+      window.addEventListener("hashchange", () => show(currentKey()));
+
+      if (!location.hash) location.hash = "#" + DEFAULT;
+      show(currentKey());
+    })();
+  </script>
+
+  <script>
     (function(){
       "use strict";
 
@@ -618,7 +1142,6 @@
       const canvas = document.getElementById("qr");
       const ctx = canvas.getContext("2d", { alpha: false });
 
-      // --- GF(256) ---
       const GF = (function(){
         const exp = new Uint8Array(512);
         const log = new Uint8Array(256);
@@ -638,23 +1161,10 @@
       })();
 
       function rsGeneratorPoly(degree){
-        // (x - a^0)(x - a^1)...(x - a^(degree-1))
         let poly = [1];
         for (let i=0;i<degree;i++){
-          const a = (function(){
-            // a^i in GF(256) with primitive 0x11d: exp table implicit in mul logic
-            // We can compute via repeated multiply by 2 in GF(256) using exp/log,
-            // but easiest: use pow(2,i) in exp by leveraging log/exp indirectly.
-            // We'll generate by multiplying: 1 * (x + α^i)
-            // Need α^i in int form; use exp table reconstruction:
-            // We'll recreate exp on the fly by repeated doubling in GF, but degree <= 30ish here.
-            let v = 1;
-            for (let k=0;k<i;k++){
-              v = GF.mul(v, 2);
-            }
-            return v;
-          })();
-
+          let a = 1;
+          for (let k=0;k<i;k++) a = GF.mul(a, 2);
           const next = new Array(poly.length + 1).fill(0);
           for (let j=0;j<poly.length;j++){
             next[j] ^= GF.mul(poly[j], a);
@@ -662,7 +1172,7 @@
           }
           poly = next;
         }
-        return poly; // highest degree last
+        return poly;
       }
 
       function rsCompute(data, eccLen){
@@ -679,8 +1189,6 @@
         return ecc;
       }
 
-      // --- QR tables for versions 1..6 (byte mode capacities & ecc codewords by EC level) ---
-      // capacities in bytes for mode "byte", excluding overhead, per version+EC
       const CAP_BYTES = {
         1: { L:17, M:14, Q:11, H:7 },
         2: { L:32, M:26, Q:20, H:14 },
@@ -689,7 +1197,6 @@
         5: { L:106, M:84, Q:60, H:44 },
         6: { L:134, M:106, Q:74, H:58 }
       };
-      // total data codewords for each (version, level) for 1..6 (single block for these small versions in our use)
       const DATA_CW = {
         1: { L:19, M:16, Q:13, H:9 },
         2: { L:34, M:28, Q:22, H:16 },
@@ -708,7 +1215,6 @@
       };
 
       function pickVersionAndLevel(str){
-        // предпочтение: Q (баланс), если не влезает — M или L
         const bytes = new TextEncoder().encode(str).length;
         const prefs = ["Q","M","L","H"];
         for (let v=1; v<=6; v++){
@@ -716,7 +1222,6 @@
             if (bytes <= CAP_BYTES[v][lvl]) return { version:v, level:lvl, bytes };
           }
         }
-        // если вдруг не влезло, fallback
         return { version:6, level:"L", bytes };
       }
 
@@ -749,26 +1254,18 @@
         const enc = new TextEncoder().encode(str);
         const bb = makeBitBuffer();
 
-        // mode indicator: byte = 0100
         bb.push(0b0100, 4);
-
-        // char count indicator length for byte mode: v1-9 => 8 bits
         bb.push(enc.length, 8);
-
-        // data
         bb.pushBytes(enc);
 
         const totalDataCw = DATA_CW[version][level];
         const totalDataBits = totalDataCw * 8;
 
-        // terminator up to 4 bits
         const remaining = totalDataBits - bb.bits.length;
         if (remaining > 0) bb.push(0, Math.min(4, remaining));
 
-        // pad to byte
         while (bb.bits.length % 8 !== 0) bb.push(0, 1);
 
-        // pad codewords 0xEC, 0x11 alternating
         let cws = bitsToCodewords(bb.bits);
         const padBytes = [0xEC, 0x11];
         let p = 0;
@@ -779,18 +1276,14 @@
       }
 
       function interleaveBlocks(dataCw, eccCw){
-        // For versions 1..6 here, treat as single block
         return dataCw.concat(eccCw);
       }
 
-      // --- QR matrix building ---
       function sizeForVersion(v){ return 17 + 4*v; }
 
       function makeMatrix(n){
         const m = new Array(n);
-        for (let y=0;y<n;y++){
-          m[y] = new Array(n).fill(null); // null means unset
-        }
+        for (let y=0;y<n;y++) m[y] = new Array(n).fill(null);
         return m;
       }
 
@@ -820,27 +1313,19 @@
       }
 
       function addAlignment(m, version){
-        // alignment patterns positions for versions 2..6
-        const posMap = {
-          2:[6,18],
-          3:[6,22],
-          4:[6,26],
-          5:[6,30],
-          6:[6,34]
-        };
+        const posMap = { 2:[6,18], 3:[6,22], 4:[6,26], 5:[6,30], 6:[6,34] };
         const pos = posMap[version];
         if (!pos) return;
+        const n = m.length;
         for (let i=0;i<pos.length;i++){
           for (let j=0;j<pos.length;j++){
             const x = pos[i], y = pos[j];
-            // skip if overlaps finder
-            const n = m.length;
             const isInFinder =
               (x<=8 && y<=8) ||
               (x>=n-9 && y<=8) ||
               (x<=8 && y>=n-9);
             if (isInFinder) continue;
-            // draw 5x5 alignment pattern
+
             for (let dy=-2; dy<=2; dy++){
               for (let dx=-2; dx<=2; dx++){
                 const xx=x+dx, yy=y+dy;
@@ -855,19 +1340,16 @@
 
       function reserveFormatInfo(m){
         const n = m.length;
-        // Around top-left
         for (let i=0;i<9;i++){
           if (i!==6){
-            if (m[8][i]===null) m[8][i]=0; // reserve
+            if (m[8][i]===null) m[8][i]=0;
             if (m[i][8]===null) m[i][8]=0;
           }
         }
-        // top-right & bottom-left
         for (let i=0;i<8;i++){
           if (m[8][n-1-i]===null) m[8][n-1-i]=0;
           if (m[n-1-i][8]===null) m[n-1-i][8]=0;
         }
-        // dark module
         setModule(m, 8, n-8, 1);
       }
 
@@ -890,7 +1372,7 @@
 
         let dirUp = true;
         for (let x = n - 1; x > 0; x -= 2){
-          if (x === 6) x--; // skip timing column
+          if (x === 6) x--;
           for (let yOffset = 0; yOffset < n; yOffset++){
             const y = dirUp ? (n-1 - yOffset) : yOffset;
             for (let dx=0; dx<2; dx++){
@@ -917,43 +1399,23 @@
         }
       }
 
-      function applyMask(m, mask){
-        const n = m.length;
-        for (let y=0;y<n;y++){
-          for (let x=0;x<n;x++){
-            // don't mask function patterns & reserved areas (they're already set; but we need a way to detect which are data)
-            // Here: we mask only modules that were not part of finder/timing/alignment/format/dark reserved.
-            // We approximate by re-building a "reserved" matrix by checking known patterns; easiest: treat null as data,
-            // but at this stage all are filled. So we instead compute a conservative skip list based on coordinates.
-            // We'll create an isFunction(x,y) check.
-            if (isFunctionModule(n, x, y)) continue;
-            if (maskFunc(mask, x, y)) m[y][x] ^= 1;
-          }
-        }
-      }
+      let ALIGN_CENTERS = [];
 
       function isFunctionModule(n, x, y){
-        // Finder + separators areas (top-left, top-right, bottom-left)
         const inTL = (x <= 8 && y <= 8);
         const inTR = (x >= n-9 && y <= 8);
         const inBL = (x <= 8 && y >= n-9);
         if (inTL || inTR || inBL) return true;
 
-        // Timing patterns
         if (x === 6 || y === 6) return true;
 
-        // Format info lines
         if (y === 8 && x <= 8) return true;
         if (x === 8 && y <= 8) return true;
         if (y === 8 && x >= n-8) return true;
         if (x === 8 && y >= n-8) return true;
 
-        // Dark module
         if (x === 8 && y === n-8) return true;
 
-        // Alignment patterns (versions 2..6) are within 5x5 blocks; we can detect by finding any 5x5 center positions
-        // For our supported versions, centers are at posMap coords; mark those areas as function.
-        // We'll store them globally after pick.
         if (ALIGN_CENTERS && ALIGN_CENTERS.length){
           for (const c of ALIGN_CENTERS){
             if (Math.abs(x - c.x) <= 2 && Math.abs(y - c.y) <= 2) return true;
@@ -962,10 +1424,19 @@
         return false;
       }
 
+      function applyMask(m, mask){
+        const n = m.length;
+        for (let y=0;y<n;y++){
+          for (let x=0;x<n;x++){
+            if (isFunctionModule(n, x, y)) continue;
+            if (maskFunc(mask, x, y)) m[y][x] ^= 1;
+          }
+        }
+      }
+
       function formatBits(level, mask){
-        // format info: 5 bits (EC level + mask), BCH(15,5) with generator 0x537, XOR 0x5412
-        const EC_BITS = { L:1, M:0, Q:3, H:2 }; // per spec
-        let data = (EC_BITS[level] << 3) | mask; // 5 bits
+        const EC_BITS = { L:1, M:0, Q:3, H:2 };
+        let data = (EC_BITS[level] << 3) | mask;
         let bch = data << 10;
         const gen = 0x537;
         for (let i=14;i>=10;i--){
@@ -980,9 +1451,8 @@
       function writeFormatInfo(m, level, mask){
         const n = m.length;
         const fmt = formatBits(level, mask);
+        function bit(i){ return (fmt >> i) & 1; }
 
-        function bit(i){ return (fmt >> i) & 1; } // i=0..14 LSB
-        // placement order (15 bits): per QR spec
         const coords1 = [
           [8,0],[8,1],[8,2],[8,3],[8,4],[8,5],[8,7],[8,8],[7,8],[5,8],[4,8],[3,8],[2,8],[1,8],[0,8]
         ];
@@ -990,6 +1460,7 @@
           [n-1,8],[n-2,8],[n-3,8],[n-4,8],[n-5,8],[n-6,8],[n-7,8],
           [8,n-8],[8,n-7],[8,n-6],[8,n-5],[8,n-4],[8,n-3],[8,n-2],[8,n-1]
         ];
+
         for (let i=0;i<15;i++){
           const b = bit(i);
           const [x1,y1] = coords1[i];
@@ -1003,26 +1474,19 @@
         const n = m.length;
         let score = 0;
 
-        // N1: consecutive modules in row/col
-        function linePenalty(get){
-          for (let i=0;i<n;i++){
-            let runColor = get(i,0);
-            let runLen = 1;
-            for (let j=1;j<n;j++){
-              const c = get(i,j);
-              if (c === runColor){
-                runLen++;
-              }else{
-                if (runLen >= 5) score += 3 + (runLen - 5);
-                runColor = c; runLen = 1;
-              }
+        for (let y=0;y<n;y++){
+          let runColor = m[y][0], runLen = 1;
+          for (let x=1;x<n;x++){
+            const c = m[y][x];
+            if (c === runColor) runLen++;
+            else{
+              if (runLen >= 5) score += 3 + (runLen - 5);
+              runColor = c; runLen = 1;
             }
-            if (runLen >= 5) score += 3 + (runLen - 5);
           }
+          if (runLen >= 5) score += 3 + (runLen - 5);
         }
-        linePenalty((r,c)=>m[r][c]);
-        linePenalty((c,r)=>m[r][c]); // same call style for columns handled by swap below is heavy; do explicit:
-        // fix: explicit columns
+
         for (let x=0;x<n;x++){
           let runColor = m[0][x], runLen = 1;
           for (let y=1;y<n;y++){
@@ -1036,7 +1500,6 @@
           if (runLen >= 5) score += 3 + (runLen - 5);
         }
 
-        // N2: 2x2 blocks
         for (let y=0;y<n-1;y++){
           for (let x=0;x<n-1;x++){
             const v = m[y][x];
@@ -1044,7 +1507,6 @@
           }
         }
 
-        // N3: finder-like patterns
         const pat1 = [1,0,1,1,1,0,1,0,0,0,0];
         const pat2 = [0,0,0,0,1,0,1,1,1,0,1];
         function matchRow(y, x0, pat){
@@ -1070,7 +1532,6 @@
           }
         }
 
-        // N4: balance of dark modules
         let dark = 0;
         for (let y=0;y<n;y++) for (let x=0;x<n;x++) dark += (m[y][x] ? 1 : 0);
         const total = n*n;
@@ -1084,9 +1545,6 @@
         return m.map(row => row.slice());
       }
 
-      // alignment centers global for mask skip
-      let ALIGN_CENTERS = [];
-
       function buildMatrix(version, level, codewords){
         const n = sizeForVersion(version);
         const m = makeMatrix(n);
@@ -1097,15 +1555,8 @@
 
         addTiming(m);
 
-        // alignment
         ALIGN_CENTERS = [];
-        const posMap = {
-          2:[6,18],
-          3:[6,22],
-          4:[6,26],
-          5:[6,30],
-          6:[6,34]
-        };
+        const posMap = { 2:[6,18], 3:[6,22], 4:[6,26], 5:[6,30], 6:[6,34] };
         const pos = posMap[version];
         if (pos){
           for (let i=0;i<pos.length;i++){
@@ -1124,11 +1575,8 @@
 
         reserveFormatInfo(m);
 
-        // fill remaining null with 0 temporarily to avoid nulls in function penalty calculations after data placement
         placeData(m, codewords);
 
-        // Choose best mask (0..7) by penalty score
-        let bestMask = 0;
         let bestScore = Infinity;
         let bestMatrix = null;
 
@@ -1139,7 +1587,6 @@
           const s = penaltyScore(test);
           if (s < bestScore){
             bestScore = s;
-            bestMask = mask;
             bestMatrix = test;
           }
         }
@@ -1148,21 +1595,17 @@
 
       function renderMatrix(m){
         const n = m.length;
-        // padding "quiet zone" = 4 modules
         const qz = 4;
-        const scale = 2; // internal scale for crispness (canvas is 100x100)
         const modules = n + qz*2;
         const px = Math.floor(canvas.width / modules);
         const size = px * modules;
-        // center within canvas
         const ox = Math.floor((canvas.width - size)/2);
         const oy = Math.floor((canvas.height - size)/2);
 
-        // background
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(0,0,canvas.width,canvas.height);
 
-        ctx.fillStyle = "#1f1815"; // тёмный "дорогой" цвет
+        ctx.fillStyle = "#1f1815";
         for (let y=0;y<modules;y++){
           for (let x=0;x<modules;x++){
             const mx = x - qz;
@@ -1175,10 +1618,8 @@
         }
       }
 
-      // --- Pipeline ---
       const picked = pickVersionAndLevel(text);
       const version = picked.version;
-      // for a small poster QR, Q is good, but if chosen by picker it might vary
       const level = picked.level;
 
       const dataCw = buildDataCodewords(text, version, level);
@@ -1188,7 +1629,6 @@
       const matrix = buildMatrix(version, level, codewords);
       renderMatrix(matrix);
 
-      // Give canvas an accessible label via title
       canvas.setAttribute("aria-label", "QR-код для открытия Telegram");
       canvas.setAttribute("role", "img");
     })();
